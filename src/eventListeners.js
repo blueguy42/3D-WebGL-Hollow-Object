@@ -2,6 +2,7 @@ document.getElementById('btn-tool-hide').addEventListener('click', function() {
     document.querySelector('.floating-sidebar').classList.toggle('hide');
     document.querySelector('.floating-sidebar-top').classList.toggle('hide');
     document.querySelector('.floating-sidebar-bottom').classList.toggle('hide');
+    document.querySelector('.popup').classList.toggle('hide');
 });
 
 document.getElementById('btn-tool-shapes').addEventListener('click', function() {

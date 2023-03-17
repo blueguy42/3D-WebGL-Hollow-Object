@@ -130,6 +130,7 @@ input:checked + .toggle:before {
     padding-top: 20px;
     width: 60px;
     height: calc(80% - 80px);
+    min-height: 32rem;
     background: #474646;
     margin: 10px;
     box-sizing: border-box;
@@ -140,6 +141,7 @@ input:checked + .toggle:before {
     align-self: start;
     top: 50px;
     transition: all 0.2s linear;
+    z-index: 3;
 }
 
 .floating-sidebar.hide {
@@ -151,6 +153,7 @@ input:checked + .toggle:before {
     margin-left: 15px;
     margin-top: 25px;
     padding: 5px;
+    min-height: 0;
 }
 
 .floating-sidebar-top.hide {
@@ -193,6 +196,7 @@ input:checked + .toggle:before {
     cursor: pointer;
     transition: 0.2s;
     margin-bottom: 15px;
+    z-index: 5;
 }
 
 .btn-tools:active {
@@ -207,22 +211,29 @@ input:checked + .toggle:before {
     color: #282828;
 }
 
+.popup.hide {
+    display: none;
+}
+
 .popup {
     position: fixed;
-    width: 13rem;
-    height: fit-content;
-    left: 72px;
-    display: none;
+    width: 0;
+    height: 0;
+    left: 0;
     justify-content: center;
     align-items: center;
     background-color: #474646;
     flex-direction: column;
     border-radius: 10px;
     transition: 0.2s ease-in-out;
+    overflow: hidden;
 }
 
 .popup.show {
     display: flex;
+    left: 72px;
+    width: 13rem;
+    height: fit-content;
 }
 
 .popup-title {
@@ -230,10 +241,15 @@ input:checked + .toggle:before {
     font-size: 13px;
     font-weight: 500;
     margin: 5px;
+    display: none;
+}
+
+.popup.show * {
+    display: flex;
 }
 
 .popup-submenu {
-    display: flex;
+    display: none;
     flex-direction: column;
     width: 100%;
     justify-content: space-between;
