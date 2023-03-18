@@ -22,6 +22,16 @@ const createTranslationMatrix = (x, y, z) => {
     ];
 };
 
+const createRotationMatrix = (xt, yt, zt) => {
+    // TODO: Implement
+    return identityMatrix;
+}
+
+const createScaleMatrix = (x, y, z) => {
+    // TODO: Implement
+    return identityMatrix;
+}
+
 const identityMatrix = [
     1, 0, 0, 0,
     0, 1, 0, 0,

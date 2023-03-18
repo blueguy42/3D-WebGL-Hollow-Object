@@ -11,24 +11,29 @@ var fovUniformLocation = null
 var current = {}
 
 const shaderVertex = `
-attribute vec3 position;
-uniform float fov;
+    attribute vec3 position;
+    uniform float fov;
 
-uniform mat4 transformationMatrix;
-uniform mat4 uProjectionMatrix;
-varying float colorFactor;
+    uniform mat4 transformationMatrix;
+    uniform mat4 uProjectionMatrix;
 
-void main(void) {
-    vec4 transformedPos = transformationMatrix * vec4(position.xy, position.z * -1.0, 1.0);
-    vec4 projectedPos   =  transformedPos;
-    if (fov < 0.01)
-        gl_Position = projectedPos;
-    else {
-        float zDivider = 2.0 + projectedPos.z * fov;
-        gl_Position = vec4(projectedPos.xy / zDivider, projectedPos.zw);
+    varying float colorFactor;
+    varying float maxZ;
+    varying float minZ;
+
+    void main(void) {
+        vec4 transformedPos = transformationMatrix * vec4(position.xy, position.z * -1.0, 1.0);
+        vec4 projectedPos = uProjectionMatrix * transformedPos;
+        
+        if (fov < 0.01)
+            gl_Position = projectedPos;
+        else {
+            float zDivider = 2.0 + projectedPos.z * fov;
+            gl_Position = vec4(projectedPos.xy / zDivider, projectedPos.zw);
+        }
+        
+        colorFactor = pow(min(max((1.6 - projectedPos.z) / 2.0, 0.0), 1.0), 2.2);
     }
-    colorFactor = min(max((1.25 - transformedPos.z) / 2.0, 0.0), 1.0);
-}
 `
 
 const shaderFragment = `
@@ -85,27 +90,27 @@ function initializeProgram() {
 
 function resetCanvas() {
     document.getElementById("color-picker").value = "#ff0000";
-    document.querySelectorAll("#translation-popup .slider").forEach((slider) => {
-        slider.value = 0;
-        document.querySelector("#" + slider.id + "-value").innerHTML = document.querySelector("#" + slider.id + "-value").innerHTML.substring(0,3) + "0";
-    });
     current = {
         model: cube,
         transformation: {
             translation: [0, 0, 0],
             rotation   : [0, 0, 0],
-            scale      : [1, 1, 1],
+            scale      : [0, 0, 0],
         },
         view: {
-            rotation: 0,
-            radius: 0.1
+            rotation: [-0.4, 0.787, 0],
         },
         color: hexToRGBColor(document.getElementById("color-picker").value),
         shader: true,
-        projection: null,
-        fov: 1
+        projection: "orthographic",
+        fov: null,
+        mouse: {
+            dragging: false,
+            origin: {x: undefined, y: undefined},
+            delta: {x: 0, y: 0},
+        }
     }
-    document.getElementById("shape-cube").click();
+    syncToolsFromCurrent();
 }
 
 function computeTransformMatrix() {
@@ -116,6 +121,16 @@ function computeTransformMatrix() {
 
     transformMatrix = createTranslationMatrix(translation[0], translation[1], translation[2]);
     return transformMatrix;
+}
+
+function computeViewMatrix() {
+    var viewMatrix;
+    viewMatrix = createRotationMatrix(current.view.rotation[0], current.view.rotation[1], current.view.rotation[2]);
+
+    if (current.projection === "orthographic") {
+        current.fov = 0;
+        return matrixMult4x4(identityMatrix, viewMatrix);
+    }
 }
 
 function render() {
@@ -133,7 +148,7 @@ function render() {
     gl.enableVertexAttribArray(positionAttributeLocation);
     gl.vertexAttribPointer(positionAttributeLocation, 3, gl.FLOAT, false, 0, 0);
 
-    // gl.uniformMatrix4fv(uProjectionMatrixUniformLocation, false, matrixMult(projectionMatrix("pers"), computeViewMatrix()));
+    gl.uniformMatrix4fv(uProjectionMatrixUniformLocation, false, new Float32Array(computeViewMatrix()));
     gl.uniformMatrix4fv(transformationMatrixUniformLocation, false, new Float32Array(computeTransformMatrix()));
     gl.uniform3fv(colorUniformLocation, new Float32Array(current.color));
     gl.uniform1f(fovUniformLocation, current.fov);
@@ -144,4 +159,5 @@ function render() {
     gl.drawElements(gl.TRIANGLES, current.model.indices.length, gl.UNSIGNED_SHORT, 0);
     window.requestAnimationFrame(render);
 }
+
 main();

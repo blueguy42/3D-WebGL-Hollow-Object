@@ -150,7 +150,7 @@ input:checked + .toggle:before {
     top: 50px;
     transition: all 0.2s linear;
     z-index: 3;
-    box-shadow: #3c3c3c 0px 0px 10px;
+    box-shadow: #3c3c3c 0px 0px 7px;
 }
 
 .floating-sidebar.hide {
@@ -243,7 +243,7 @@ input:checked + .toggle:before {
     left: 90px;
     width: 13rem;
     height: fit-content;
-    box-shadow: #3c3c3c 0px 0px 10px;
+    box-shadow: #3c3c3c 0px 0px 7px;
 }
 
 .popup-title {
