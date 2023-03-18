@@ -1,3 +1,4 @@
+// Popup Event Listeners
 document.getElementById('btn-tool-hide').addEventListener('click', function() {
     document.querySelector('.floating-sidebar').classList.toggle('hide');
     document.querySelector('.floating-sidebar-top').classList.toggle('hide');
@@ -119,4 +120,54 @@ document.getElementById('btn-tool-projection').addEventListener('click', functio
         }
     });
     this.classList.toggle('active');
+});
+
+// Tools Event Listeners
+document.getElementById('shape-cube').addEventListener('click', function() {
+    if (this.classList.contains('active')) return;
+    document.querySelectorAll('.btn-shapes').forEach(function(shape) {
+        shape.classList.remove('active');
+    });
+    this.classList.add('active');
+    current.model = cube;
+});
+
+document.getElementById("color-picker").addEventListener("input", function() {
+    current.color = hexToRGBColor(this.value);
+});
+
+window.addEventListener('resize', function() {
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+});
+
+document.getElementById('translation-x').addEventListener('input', function() {
+    current.transformation.translation[0] = this.value/100;
+    document.getElementById('translation-x-value').innerHTML = "X: " + this.value/100;
+});
+
+document.getElementById('translation-y').addEventListener('input', function() {
+    current.transformation.translation[1] = this.value/100;
+    document.getElementById('translation-y-value').innerHTML = "X: " + this.value/100;
+});
+
+document.getElementById('translation-z').addEventListener('input', function() {
+    current.transformation.translation[2] = this.value/100;
+    document.getElementById('translation-z-value').innerHTML = "X: " + this.value/100;
+});
+
+document.getElementById('btn-shader').addEventListener('click', function() {
+    gl.deleteShader(fragmentShader);
+    gl.deleteShader(vertexShader);
+    gl.detachShader(program, fragmentShader);
+    gl.detachShader(program, vertexShader);
+    current.shader = !current.shader;
+    initializeProgram();
+});
+
+document.getElementById('btn-reset').addEventListener('click', function() {
+    if (!current.shader) {
+        document.getElementById('btn-shader').click();
+    }
+    resetCanvas();
 });

@@ -299,6 +299,10 @@ input:checked + .toggle:before {
     background: #5a5a5a;
 }
 
+.btn-popup.active {
+    background: #696969;
+}
+
 .popup-submenu p {
     color: #fff;
     font-size: 14px;
