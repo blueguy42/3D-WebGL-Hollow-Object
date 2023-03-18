@@ -163,6 +163,7 @@ document.getElementById('btn-shader').addEventListener('click', function() {
     gl.detachShader(program, vertexShader);
     current.shader = !current.shader;
     initializeProgram();
+    this.toggleAttribute('checked');
 });
 
 document.getElementById('btn-reset').addEventListener('click', function() {
@@ -170,4 +171,67 @@ document.getElementById('btn-reset').addEventListener('click', function() {
         document.getElementById('btn-shader').click();
     }
     resetCanvas();
+});
+
+document.getElementById('btn-projection-orthographic').addEventListener('click', function() {
+    if (this.classList.contains('active')) return;
+    document.querySelectorAll('.btn-projection').forEach(function(btn) {
+        btn.classList.remove('active');
+    });
+    this.classList.add('active');
+    current.projection = "orthographic";
+});
+
+document.getElementById('canvas').addEventListener("mousedown", function(e) {
+    current.mouse.dragging = true;
+    current.mouse.origin.x = e.pageX;
+    current.mouse.origin.y = e.pageY;
+    e.preventDefault();
+    return false;
+});
+
+document.getElementById('canvas').addEventListener("mouseup", function() {
+    current.mouse.dragging = false;
+});
+
+document.getElementById('canvas').addEventListener("mouseout", function() {
+    current.mouse.dragging = false;
+});
+
+document.getElementById('canvas').addEventListener("mousemove", function(e) {
+    if (!current.mouse.dragging) {
+        return false;
+    }
+    current.mouse.delta.x = (e.pageX - current.mouse.origin.x) * (Math.PI / canvas.width);
+    current.mouse.delta.y = (e.pageY - current.mouse.origin.y) * (Math.PI / canvas.height);
+    current.view.rotation[1] -= current.mouse.delta.x;
+    current.view.rotation[0] -= current.mouse.delta.y;
+    current.mouse.origin.x = e.pageX;
+    current.mouse.origin.y = e.pageY;
+    e.preventDefault();
+});
+
+document.getElementById('btn-save').addEventListener('click', function() {
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(current));
+    const downloadAnchorNode = document.createElement('a');
+    downloadAnchorNode.setAttribute("href", dataStr);
+    downloadAnchorNode.setAttribute("download", "save.json");
+    document.body.appendChild(downloadAnchorNode);
+    downloadAnchorNode.click();
+    downloadAnchorNode.remove();
+});
+
+document.getElementById('btn-load').addEventListener('click', function() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.onchange = e => {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.readAsText(file,'UTF-8');
+        reader.onload = readerEvent => {
+            current = JSON.parse(readerEvent.target.result);
+            syncToolsFromCurrent();
+        }
+    }
+    input.click();
 });
