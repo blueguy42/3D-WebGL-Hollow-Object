@@ -87,7 +87,7 @@ function resetCanvas() {
     document.getElementById("color-picker").value = "#ff0000";
     document.querySelectorAll("#translation-popup .slider").forEach((slider) => {
         slider.value = 0;
-        document.querySelector("#" + slider.id + "-value").innerHTML = "X: 0";
+        document.querySelector("#" + slider.id + "-value").innerHTML = document.querySelector("#" + slider.id + "-value").innerHTML.substring(0,3) + "0";
     });
     current = {
         model: cube,
@@ -132,7 +132,7 @@ function render() {
 
     gl.enableVertexAttribArray(positionAttributeLocation);
     gl.vertexAttribPointer(positionAttributeLocation, 3, gl.FLOAT, false, 0, 0);
-    
+
     // gl.uniformMatrix4fv(uProjectionMatrixUniformLocation, false, matrixMult(projectionMatrix("pers"), computeViewMatrix()));
     gl.uniformMatrix4fv(transformationMatrixUniformLocation, false, new Float32Array(computeTransformMatrix()));
     gl.uniform3fv(colorUniformLocation, new Float32Array(current.color));

@@ -148,12 +148,12 @@ document.getElementById('translation-x').addEventListener('input', function() {
 
 document.getElementById('translation-y').addEventListener('input', function() {
     current.transformation.translation[1] = this.value/100;
-    document.getElementById('translation-y-value').innerHTML = "X: " + this.value/100;
+    document.getElementById('translation-y-value').innerHTML = "Y: " + this.value/100;
 });
 
 document.getElementById('translation-z').addEventListener('input', function() {
     current.transformation.translation[2] = this.value/100;
-    document.getElementById('translation-z-value').innerHTML = "X: " + this.value/100;
+    document.getElementById('translation-z-value').innerHTML = "Z: " + this.value/100;
 });
 
 document.getElementById('btn-shader').addEventListener('click', function() {
