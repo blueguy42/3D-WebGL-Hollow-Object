@@ -4,22 +4,22 @@ var fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
 var vertexShader = gl.createShader(gl.VERTEX_SHADER);
 const program = gl.createProgram();
 var positionAttributeLocation = null
+var colorAttributeLocation = null
 var transformationMatrixUniformLocation = null
-var colorUniformLocation = null
 var uProjectionMatrixUniformLocation = null
 var fovUniformLocation = null
 var current = {}
 
 const shaderVertex = `
     attribute vec3 position;
+    attribute vec3 color;
     uniform float fov;
 
     uniform mat4 transformationMatrix;
     uniform mat4 uProjectionMatrix;
 
-    varying float colorFactor;
-    varying float maxZ;
-    varying float minZ;
+    varying vec4 vColor;
+    varying vec4 vFlatColor;
 
     void main(void) {
         vec4 transformedPos = transformationMatrix * vec4(position.xy, position.z * -1.0, 1.0);
@@ -31,25 +31,24 @@ const shaderVertex = `
             float zDivider = 2.0 + projectedPos.z * fov;
             gl_Position = vec4(projectedPos.xy / zDivider, projectedPos.zw);
         }
-        
-        colorFactor = pow(min(max((1.6 - projectedPos.z) / 2.0, 0.0), 1.0), 2.2);
+        vColor = vec4(pow(min(max((1.6 - projectedPos.z) / 2.0, 0.0), 1.0), 2.2) * color, 1.0);
+        vFlatColor = vec4(color, 1.0);
     }
 `
 
 const shaderFragment = `
     precision mediump float;
-    uniform vec3 userColor;
-    varying float colorFactor;
+    varying vec4 vColor;
     void main(void) {
-        gl_FragColor = vec4(userColor * colorFactor, 1.0);
+        gl_FragColor = vColor;
     }
 `
 
 const flatShaderFragment = `
     precision mediump float;
-    uniform vec3 userColor;
+    varying vec4 vFlatColor;
     void main(void) {
-        gl_FragColor = vec4(userColor, 1.0);
+        gl_FragColor = vFlatColor;
     }
 `
 
@@ -80,16 +79,15 @@ function initializeProgram() {
     gl.useProgram(program);
 
     positionAttributeLocation = gl.getAttribLocation(program, "position");
+    colorAttributeLocation = gl.getAttribLocation(program, "color");
     transformationMatrixUniformLocation = gl.getUniformLocation(program, "transformationMatrix");
     uProjectionMatrixUniformLocation = gl.getUniformLocation(program, "uProjectionMatrix");
-    colorUniformLocation = gl.getUniformLocation(program, "userColor");
     fovUniformLocation  = gl.getUniformLocation(program, "fov");
 
     requestAnimationFrame(render);
 }
 
 function resetCanvas() {
-    document.getElementById("color-picker").value = "#ff0000";
     current = {
         model: cube,
         transformation: {
@@ -99,8 +97,8 @@ function resetCanvas() {
         },
         view: {
             rotation: [-0.4, 0.787, 0],
+            radius: 0,
         },
-        color: hexToRGBColor(document.getElementById("color-picker").value),
         shader: true,
         projection: "orthographic",
         fov: null,
@@ -126,6 +124,7 @@ function computeTransformMatrix() {
 function computeViewMatrix() {
     var viewMatrix;
     viewMatrix = createRotationMatrix(current.view.rotation[0], current.view.rotation[1], current.view.rotation[2]);
+    viewMatrix = matrixMult4x4(viewMatrix, createTranslationMatrix(0, 0, current.view.radius));
 
     if (current.projection === "orthographic") {
         current.fov = 0;
@@ -139,21 +138,23 @@ function render() {
 
     gl.viewport(0, 0, canvas.clientWidth, canvas.clientHeight);
     gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
-    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(current.model.vertices), gl.STATIC_DRAW);
 
     gl.clearColor(1.0, 1.0, 1.0, 1.0);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
     gl.enable(gl.DEPTH_TEST);
 
     gl.enableVertexAttribArray(positionAttributeLocation);
-    gl.vertexAttribPointer(positionAttributeLocation, 3, gl.FLOAT, false, 0, 0);
+    gl.vertexAttribPointer(positionAttributeLocation, 3, gl.FLOAT, false, 6*Float32Array.BYTES_PER_ELEMENT, 0);
+
+    gl.enableVertexAttribArray(colorAttributeLocation);
+    gl.vertexAttribPointer(colorAttributeLocation, 3, gl.FLOAT, false, 6*Float32Array.BYTES_PER_ELEMENT, 3*Float32Array.BYTES_PER_ELEMENT);
 
     gl.uniformMatrix4fv(uProjectionMatrixUniformLocation, false, new Float32Array(computeViewMatrix()));
     gl.uniformMatrix4fv(transformationMatrixUniformLocation, false, new Float32Array(computeTransformMatrix()));
-    gl.uniform3fv(colorUniformLocation, new Float32Array(current.color));
     gl.uniform1f(fovUniformLocation, current.fov);
 
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(current.model.vertices), gl.STATIC_DRAW);
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
     gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(current.model.indices), gl.STATIC_DRAW);
 
     gl.drawElements(gl.TRIANGLES, current.model.indices.length, gl.UNSIGNED_SHORT, 0);

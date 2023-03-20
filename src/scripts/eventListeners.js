@@ -85,28 +85,6 @@ document.getElementById('zoom-slider').addEventListener('input', function() {
     document.getElementById('zoom-value').innerHTML = this.value + '%';
 });
 
-document.querySelector('#btn-tool-color').addEventListener('click', function() {
-    const colorPicker = document.querySelector('#color-picker');
-    document.querySelectorAll('.popup').forEach(function(popup) {
-        popup.classList.remove('show');
-    });
-    document.querySelectorAll('.btn-tools').forEach(function(tool) {
-        if (tool.id !== 'btn-tool-color') {
-            tool.classList.remove('active');
-        }
-    });
-    this.classList.toggle('active');
-    if (this.classList.contains('active')) {
-        document.querySelector(':root').addEventListener('click', function(e) {
-            if (e.target !== colorPicker && e.target !== document.querySelector('#btn-tool-color') && e.target !== document.querySelector('#btn-tool-color i')) {
-                document.querySelector('#btn-tool-color').classList.remove('active');
-                document.querySelector(':root').removeEventListener('click', arguments.callee);
-            }
-        });
-        colorPicker.click()
-    }
-});
-
 document.getElementById('btn-tool-projection').addEventListener('click', function() {
     document.querySelectorAll('.popup').forEach(function(popup) {
         if (popup.id !== 'projection-popup') {
@@ -130,10 +108,6 @@ document.getElementById('shape-cube').addEventListener('click', function() {
     });
     this.classList.add('active');
     current.model = cube;
-});
-
-document.getElementById("color-picker").addEventListener("input", function() {
-    current.color = hexToRGBColor(this.value);
 });
 
 window.addEventListener('resize', function() {
