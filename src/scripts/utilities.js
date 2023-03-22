@@ -32,13 +32,13 @@ function syncToolsFromCurrent() {
     });
 
     // Sync Rotation
-    document.querySelectorAll("#rotation-popup .slider").forEach((slider) => {
+    document.querySelectorAll("#rotate-popup .slider").forEach((slider) => {
         slider.value = current.transformation.rotation[
             document.querySelector("#" + slider.id + "-value").innerHTML.substring(0,3) === "X: " ? 0
             : document.querySelector("#" + slider.id + "-value").innerHTML.substring(0,3) === "Y: " ? 1
             : 2
         ] * 100;
-        document.querySelector("#" + slider.id + "-value").innerHTML = document.querySelector("#" + slider.id + "-value").innerHTML.substring(0,3) + slider.value;
+        document.querySelector("#" + slider.id + "-value").innerHTML = document.querySelector("#" + slider.id + "-value").innerHTML.substring(0,3) + slider.value + "°";
     });
 
     // Sync Scale

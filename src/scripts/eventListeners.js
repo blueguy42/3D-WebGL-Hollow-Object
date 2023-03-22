@@ -130,6 +130,22 @@ document.getElementById('translation-z').addEventListener('input', function() {
     document.getElementById('translation-z-value').innerHTML = "Z: " + this.value/100;
 });
 
+// rotation
+document.getElementById('rotate-x').addEventListener('input', function() {
+    current.transformation.rotation[0] = this.value;
+    document.getElementById('rotate-x-value').innerHTML = "X: " + this.value + "°";
+});
+
+document.getElementById('rotate-y').addEventListener('input', function() {
+    current.transformation.rotation[1] = this.value;
+    document.getElementById('rotate-y-value').innerHTML = "Y: " + this.value + "°";
+});
+
+document.getElementById('rotate-z').addEventListener('input', function() {
+    current.transformation.rotation[2] = this.value;
+    document.getElementById('rotate-z-value').innerHTML = "Z: " + this.value + "°";
+});
+
 document.getElementById('btn-shader').addEventListener('click', function() {
     gl.deleteShader(fragmentShader);
     gl.deleteShader(vertexShader);

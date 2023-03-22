@@ -13,6 +13,10 @@ function matrixMult4x4(x, y) {
     return res;
 }
 
+function degToRad(deg) {
+    return deg * (Math.PI / 180);
+}
+
 const createTranslationMatrix = (x, y, z) => {
     return [
         1, 0, 0, 0,
@@ -23,9 +27,42 @@ const createTranslationMatrix = (x, y, z) => {
 };
 
 const createRotationMatrix = (xt, yt, zt) => {
-    // TODO: Implement
-    return identityMatrix;
+    const radianX = degToRad(xt)
+    const radianY = degToRad(yt)
+    const radianZ = degToRad(zt)
+    const xRotationMatrix = createXRotationMatrix(radianX)
+    const yRotationMatrix = createYRotationMatrix(radianY)
+    const zRotationMatrix = createZRotationMatrix(radianZ)
+    let rotationMatrix = matrixMult4x4(xRotationMatrix, matrixMult4x4(yRotationMatrix, zRotationMatrix))
+    return rotationMatrix;
 }
+
+const createXRotationMatrix = (radian) => {
+    return [
+        1, 0, 0, 0,
+        0, Math.cos(radian), Math.sin(radian), 0,
+        0, -Math.sin(radian), Math.cos(radian), 0,
+        0, 0, 0, 1
+    ];
+};
+
+const createYRotationMatrix = (radian) => {
+    return [
+        Math.cos(radian), 0, -Math.sin(radian), 0,    
+        0, 1, 0, 0,
+        Math.sin(radian), 0, Math.cos(radian), 0,
+        0, 0, 0, 1
+    ];
+};
+
+const createZRotationMatrix = (radian) => {
+    return [
+        Math.cos(radian), Math.sin(radian), 0, 0,
+        -Math.sin(radian), Math.cos(radian), 0, 0,
+        0, 0, 1, 0,
+        0, 0, 0, 1
+    ];
+};
 
 const createScaleMatrix = (x, y, z) => {
     // TODO: Implement

@@ -115,9 +115,10 @@ function computeTransformMatrix() {
     var transformMatrix;
     var translation = current.transformation.translation;
     // var scale = current.transformation.scale;
-    // var rotation = current.transformation.rotation;
+    var rotation = current.transformation.rotation;
 
     transformMatrix = createTranslationMatrix(translation[0], translation[1], translation[2]);
+    transformMatrix = matrixMult4x4(transformMatrix, createRotationMatrix(rotation[0], rotation[1], rotation[2]));
     return transformMatrix;
 }
 
