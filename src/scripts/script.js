@@ -101,6 +101,10 @@ function resetCanvas() {
         },
         shader: true,
         projection: "orthographic",
+        oblique: {
+            theta: 100,
+            phi: 100,
+        },
         fov: null,
         mouse: {
             dragging: false,
@@ -130,6 +134,9 @@ function computeViewMatrix() {
     if (current.projection === "orthographic") {
         current.fov = 0;
         return matrixMult4x4(identityMatrix, viewMatrix);
+    } else if (current.projection === "oblique") {
+        current.fov = 0;
+        return matrixMult4x4(obliqueMatrix(current.oblique.theta, current.oblique.phi), viewMatrix);
     }
 }
 

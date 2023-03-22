@@ -172,6 +172,25 @@ document.getElementById('btn-projection-orthographic').addEventListener('click',
     current.projection = "orthographic";
 });
 
+document.getElementById('btn-projection-oblique').addEventListener('click', function() {
+    if (this.classList.contains('active')) return;
+    document.querySelectorAll('.btn-projection').forEach(function(btn) {
+        btn.classList.remove('active');
+    });
+    this.classList.add('active');
+    current.projection = "oblique";
+});
+
+document.getElementById('oblique-theta').addEventListener('input', function() {
+    current.oblique.theta = this.value;
+    document.getElementById('oblique-theta-value').innerHTML = "Theta: " + this.value + "°";
+});
+
+document.getElementById('oblique-phi').addEventListener('input', function() {
+    current.oblique.phi = this.value;
+    document.getElementById('oblique-phi-value').innerHTML = "Phi: " + this.value + "°";
+});
+
 document.getElementById('canvas').addEventListener("mousedown", function(e) {
     current.mouse.dragging = true;
     current.mouse.origin.x = e.pageX;

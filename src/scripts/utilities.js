@@ -56,4 +56,17 @@ function syncToolsFromCurrent() {
         current.shader = !current.shader;
         document.querySelector("#btn-shader").click();
     }
+
+    // Sync Oblique Parameters
+    document.querySelectorAll("#oblique-params .slider").forEach((slider) => {
+        slider.value = current.oblique[
+            document.querySelector("#" + slider.id + "-value").innerHTML.substring(0,7) === "Theta: " ? "theta"
+            : "phi"
+        ];
+        if (slider.id === "oblique-theta") {
+            document.querySelector("#" + slider.id + "-value").innerHTML = "Theta: " + slider.value + "°";
+        } else {
+            document.querySelector("#" + slider.id + "-value").innerHTML = "Phi: " + slider.value + "°";
+        }
+    });
 }

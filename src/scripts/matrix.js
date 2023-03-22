@@ -75,3 +75,14 @@ const identityMatrix = [
     0, 0, 1, 0,
     0, 0, 0, 1
 ];
+
+const obliqueMatrix = (theta = 100, phi = 100) => {
+    cotTheta = -1/Math.tan(degToRad(theta));
+    cotPhi = -1/Math.tan(degToRad(phi));
+    return [
+        1, 0, 0, 0,
+        0, 1, 0, 0,
+        cotTheta, cotPhi, 1, 0,
+        0, 0, 0, 1
+    ];
+};
