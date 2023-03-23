@@ -89,7 +89,7 @@ function initializeProgram() {
 
 function resetCanvas() {
     current = {
-        model: cube,
+        model: triangularPrism,
         transformation: {
             translation: [0, 0, 0],
             rotation   : [0, 0, 0],
@@ -129,8 +129,6 @@ function computeTransformMatrix() {
 
 function computeViewMatrix() {
     var viewMatrix;
-
-    // 
 
     viewMatrix = createRotationMatrix(current.view.rotation[0], current.view.rotation[1], current.view.rotation[2]);
     viewMatrix = matrixMult4x4(viewMatrix, createTranslationMatrix(0, 0, current.view.radius));

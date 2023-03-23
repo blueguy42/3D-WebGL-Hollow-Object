@@ -37,7 +37,7 @@ function syncToolsFromCurrent() {
             document.querySelector("#" + slider.id + "-value").innerHTML.substring(0,3) === "X: " ? 0
             : document.querySelector("#" + slider.id + "-value").innerHTML.substring(0,3) === "Y: " ? 1
             : 2
-        ] * 100;
+        ];
         document.querySelector("#" + slider.id + "-value").innerHTML = document.querySelector("#" + slider.id + "-value").innerHTML.substring(0,3) + slider.value + "°";
     });
 
