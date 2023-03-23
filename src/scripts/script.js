@@ -93,7 +93,7 @@ function resetCanvas() {
         transformation: {
             translation: [0, 0, 0],
             rotation   : [0, 0, 0],
-            scale      : [0, 0, 0],
+            scale      : 1.00,
         },
         view: {
             rotation: [-0.4, 0.787, 0],
@@ -118,16 +118,20 @@ function resetCanvas() {
 function computeTransformMatrix() {
     var transformMatrix;
     var translation = current.transformation.translation;
-    // var scale = current.transformation.scale;
     var rotation = current.transformation.rotation;
+    var scale = current.transformation.scale;
 
     transformMatrix = createTranslationMatrix(translation[0], translation[1], translation[2]);
     transformMatrix = matrixMult4x4(transformMatrix, createRotationMatrix(rotation[0], rotation[1], rotation[2]));
+    transformMatrix = matrixMult4x4(transformMatrix, createScaleMatrix(scale));
     return transformMatrix;
 }
 
 function computeViewMatrix() {
     var viewMatrix;
+
+    // 
+
     viewMatrix = createRotationMatrix(current.view.rotation[0], current.view.rotation[1], current.view.rotation[2]);
     viewMatrix = matrixMult4x4(viewMatrix, createTranslationMatrix(0, 0, current.view.radius));
 

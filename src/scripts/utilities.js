@@ -28,7 +28,7 @@ function syncToolsFromCurrent() {
             : document.querySelector("#" + slider.id + "-value").innerHTML.substring(0,3) === "Y: " ? 1
             : 2
         ] * 100;
-        document.querySelector("#" + slider.id + "-value").innerHTML = document.querySelector("#" + slider.id + "-value").innerHTML.substring(0,3) + slider.value;
+        document.querySelector("#" + slider.id + "-value").innerHTML = document.querySelector("#" + slider.id + "-value").innerHTML.substring(0,3) + slider.value/100;
     });
 
     // Sync Rotation
@@ -43,12 +43,8 @@ function syncToolsFromCurrent() {
 
     // Sync Scale
     document.querySelectorAll("#scaling-popup .slider").forEach((slider) => {
-        slider.value = current.transformation.scale[
-            document.querySelector("#" + slider.id + "-value").innerHTML.substring(0,3) === "X: " ? 0
-            : document.querySelector("#" + slider.id + "-value").innerHTML.substring(0,3) === "Y: " ? 1
-            : 2
-        ] * 100;
-        document.querySelector("#" + slider.id + "-value").innerHTML = document.querySelector("#" + slider.id + "-value").innerHTML.substring(0,3) + slider.value;
+        slider.value = current.transformation.scale;
+        document.querySelector("#scaling-value").innerHTML = `Scale: ${current.transformation.scale}x`;
     });
 
     // Sync Shader

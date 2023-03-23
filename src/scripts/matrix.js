@@ -64,9 +64,13 @@ const createZRotationMatrix = (radian) => {
     ];
 };
 
-const createScaleMatrix = (x, y, z) => {
-    // TODO: Implement
-    return identityMatrix;
+const createScaleMatrix = (scale) => {
+    return [
+        scale, 0, 0, 0,
+        0, scale, 0, 0,
+        0, 0, scale, 0,
+        0, 0, 0, 1
+    ];
 }
 
 const identityMatrix = [

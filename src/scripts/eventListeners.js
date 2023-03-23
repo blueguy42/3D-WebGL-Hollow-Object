@@ -115,6 +115,7 @@ window.addEventListener('resize', function() {
     canvas.height = canvas.offsetHeight;
 });
 
+// translation
 document.getElementById('translation-x').addEventListener('input', function() {
     current.transformation.translation[0] = this.value/100;
     document.getElementById('translation-x-value').innerHTML = "X: " + this.value/100;
@@ -128,6 +129,12 @@ document.getElementById('translation-y').addEventListener('input', function() {
 document.getElementById('translation-z').addEventListener('input', function() {
     current.transformation.translation[2] = this.value/100;
     document.getElementById('translation-z-value').innerHTML = "Z: " + this.value/100;
+});
+
+// scaling
+document.getElementById('scaling').addEventListener('input', function() {
+    current.transformation.scale = this.value;
+    document.getElementById('scaling-value').innerHTML = `Scale: ${this.value}x`;
 });
 
 // rotation
