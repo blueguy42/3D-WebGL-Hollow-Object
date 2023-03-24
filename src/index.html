@@ -101,6 +101,19 @@
                 </div>
             </div>
             <button class="btn-tools" id="btn-tool-projection"><i class="fas fa-camera"></i></button>
+            <div class="popup" id="animation-popup">
+                <p class="popup-title">Animate</p>
+                <div class="popup-submenu">
+                    <button class="btn-popup" id="btn-animation-enable" style="justify-content: center;">Enable</button>
+                    <p id="speed-x-value">X Speed: 0°</p>
+                    <input type="range" class="slider" min="-180" max="180" value="0" id="speed-x">
+                    <p id="speed-y-value">Y Speed: 0°</p>
+                    <input type="range" class="slider" min="-180" max="180" value="0" id="speed-y">
+                    <p id="speed-z-value">Z Speed: 0°</p>
+                    <input type="range" class="slider" min="-180" max="180" value="0" id="speed-z">
+                </div>
+            </div>
+            <button class="btn-tools" id="btn-tool-animation"><i class="fas fa-circle-play"></i></button>
         </div>
         <div class="floating-sidebar-bottom">
             <button class="btn-tools"><i class="fas fa-circle-question"></i></button>

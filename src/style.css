@@ -341,7 +341,7 @@ input:checked + .toggle:before {
 }
 
 #perspective-params.show {
-    height: 100px;
+    height: 150px;
     padding-bottom: 10px;
     overflow: auto;
 }

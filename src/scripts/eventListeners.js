@@ -101,6 +101,21 @@ document.getElementById('btn-tool-projection').addEventListener('click', functio
     this.classList.toggle('active');
 });
 
+document.getElementById('btn-tool-animation').addEventListener('click', function() {
+    document.querySelectorAll('.popup').forEach(function(popup) {
+        if (popup.id !== 'animation-popup') {
+            popup.classList.remove('show');
+        }
+    });
+    document.getElementById('animation-popup').classList.toggle('show');
+    document.querySelectorAll('.btn-tools').forEach(function(tool) {
+        if (tool.id !== 'btn-tool-animation') {
+            tool.classList.remove('active');
+        }
+    });
+    this.classList.toggle('active');
+});
+
 // Tools Event Listeners
 document.getElementById('shape-cube').addEventListener('click', function() {
     if (this.classList.contains('active')) return;
