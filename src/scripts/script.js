@@ -5,7 +5,6 @@ var vertexShader = gl.createShader(gl.VERTEX_SHADER);
 const program = gl.createProgram();
 var positionAttributeLocation = null
 var colorAttributeLocation = null
-var transformationMatrixUniformLocation = null
 var uProjectionMatrixUniformLocation = null
 var fovUniformLocation = null
 var current = {}
@@ -15,15 +14,13 @@ const shaderVertex = `
     attribute vec3 color;
     uniform float fov;
 
-    uniform mat4 transformationMatrix;
     uniform mat4 uProjectionMatrix;
 
     varying vec4 vColor;
     varying vec4 vFlatColor;
 
     void main(void) {
-        vec4 transformedPos = transformationMatrix * vec4(position.xy, position.z * -1.0, 1.0);
-        vec4 projectedPos = uProjectionMatrix * transformedPos;
+        vec4 projectedPos = uProjectionMatrix * vec4(position, 1.0);
         
         if (fov < 0.01)
             gl_Position = projectedPos;
@@ -80,7 +77,6 @@ function initializeProgram() {
 
     positionAttributeLocation = gl.getAttribLocation(program, "position");
     colorAttributeLocation = gl.getAttribLocation(program, "color");
-    transformationMatrixUniformLocation = gl.getUniformLocation(program, "transformationMatrix");
     uProjectionMatrixUniformLocation = gl.getUniformLocation(program, "uProjectionMatrix");
     fovUniformLocation  = gl.getUniformLocation(program, "fov");
 
@@ -142,12 +138,13 @@ function computeViewMatrix() {
 }
 
 function render() {
+    transformedModel = applyTransformationToCurrentVertices();
     var vertexBuffer = gl.createBuffer();
     var indexBuffer  = gl.createBuffer();
 
     gl.viewport(0, 0, canvas.clientWidth, canvas.clientHeight);
     gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(current.model.vertices), gl.STATIC_DRAW);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(transformedModel.vertices), gl.STATIC_DRAW);
 
     gl.clearColor(1.0, 1.0, 1.0, 1.0);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
@@ -160,7 +157,6 @@ function render() {
     gl.vertexAttribPointer(colorAttributeLocation, 3, gl.FLOAT, false, 6*Float32Array.BYTES_PER_ELEMENT, 3*Float32Array.BYTES_PER_ELEMENT);
 
     gl.uniformMatrix4fv(uProjectionMatrixUniformLocation, false, new Float32Array(computeViewMatrix()));
-    gl.uniformMatrix4fv(transformationMatrixUniformLocation, false, new Float32Array(computeTransformMatrix()));
     gl.uniform1f(fovUniformLocation, current.fov);
 
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);

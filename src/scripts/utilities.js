@@ -86,7 +86,7 @@ function applyTransformationToCurrentVertices() {
         const y = vertices[i + 1];
         const z = vertices[i + 2];
 
-        var transformed = matrixMult4x1(transformMatrix, [x, y, -z, 1]);
+        var transformed = matrixMult4x1(transformMatrix, [x, y, z, 1]);
 
         transformedModel.vertices.push(transformed[0] + transformMatrix[12]);
         transformedModel.vertices.push(transformed[1] + transformMatrix[13]);
