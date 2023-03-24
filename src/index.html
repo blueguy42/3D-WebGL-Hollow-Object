@@ -62,11 +62,11 @@
                 <p class="popup-title">Rotate</p>
                 <div class="popup-submenu">
                     <p id="rotate-x-value">X: 0°</p>
-                    <input type="range" class="slider" min="-180" max="180" value="0" id="rotate-x">
+                    <input type="range" class="slider" min="-180" max="180" value="0" step="0.1" id="rotate-x">
                     <p id="rotate-y-value">Y: 0°</p>
-                    <input type="range" class="slider" min="-180" max="180" value="0" id="rotate-y">
+                    <input type="range" class="slider" min="-180" max="180" value="0" step="0.1" id="rotate-y">
                     <p id="rotate-z-value">Z: 0°</p>
-                    <input type="range" class="slider" min="-180" max="180" value="0" id="rotate-z">
+                    <input type="range" class="slider" min="-180" max="180" value="0" step="0.1" id="rotate-z">
                 </div>
             </div>
             <button class="btn-tools" id="btn-tool-rotate"><i class="fas fa-rotate"></i></button>
@@ -102,15 +102,15 @@
             </div>
             <button class="btn-tools" id="btn-tool-projection"><i class="fas fa-camera"></i></button>
             <div class="popup" id="animation-popup">
-                <p class="popup-title">Animate</p>
+                <p class="popup-title">Animation</p>
                 <div class="popup-submenu">
                     <button class="btn-popup" id="btn-animation-enable" style="justify-content: center;">Enable</button>
-                    <p id="speed-x-value">X Speed: 0°</p>
-                    <input type="range" class="slider" min="-180" max="180" value="0" id="speed-x">
-                    <p id="speed-y-value">Y Speed: 0°</p>
-                    <input type="range" class="slider" min="-180" max="180" value="0" id="speed-y">
-                    <p id="speed-z-value">Z Speed: 0°</p>
-                    <input type="range" class="slider" min="-180" max="180" value="0" id="speed-z">
+                    <p id="speed-x-value">X Speed: 60°/s</p>
+                    <input type="range" class="slider" min="-180" max="180" value="60" id="speed-x">
+                    <p id="speed-y-value">Y Speed: 30/s</p>
+                    <input type="range" class="slider" min="-180" max="180" value="30" id="speed-y">
+                    <p id="speed-z-value">Z Speed: 15°/s</p>
+                    <input type="range" class="slider" min="-180" max="180" value="15" id="speed-z">
                 </div>
             </div>
             <button class="btn-tools" id="btn-tool-animation"><i class="fas fa-circle-play"></i></button>

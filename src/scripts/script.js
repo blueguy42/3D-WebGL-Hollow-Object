@@ -89,7 +89,7 @@ function resetCanvas(currentModel) {
             radius: 0,
         },
         shader: true,
-        projection: "perspective",
+        projection: "orthographic",
         oblique: {
             theta: 105,
             phi: 105,
@@ -103,6 +103,10 @@ function resetCanvas(currentModel) {
             dragging: false,
             origin: {x: undefined, y: undefined},
             delta: {x: 0, y: 0},
+        },
+        animation: {
+            enabled: false,
+            speed: [60, 30, 15],
         }
     }
     syncToolsFromCurrent();

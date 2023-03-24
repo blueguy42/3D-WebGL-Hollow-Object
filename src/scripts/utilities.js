@@ -108,6 +108,23 @@ function syncToolsFromCurrent() {
             document.querySelector("#" + slider.id + "-value").innerHTML = "Near: " + slider.value;
         }
     });
+
+    // Sync Animation
+    document.querySelectorAll("#animation-popup .slider").forEach((slider) => {
+        slider.value = current.animation.speed[
+            document.querySelector("#" + slider.id + "-value").innerHTML.substring(0,1) === "X" ? 0
+            : document.querySelector("#" + slider.id + "-value").innerHTML.substring(0,1) === "Y" ? 1
+            : 2
+        ];
+        document.querySelector("#" + slider.id + "-value").innerHTML = `${document.querySelector("#" + slider.id + "-value").innerHTML.substring(0,1)} Speed: ${slider.value}°/s`;
+    });
+
+    if (current.animation.enabled) {
+        document.getElementById('btn-animation-enable').innerHTML = "Disable";
+        animate();
+    } else {
+        document.getElementById('btn-animation-enable').innerHTML = "Enable";
+    }
 }
 
 function applyTransformationToCurrentVertices() {
@@ -134,4 +151,34 @@ function applyTransformationToCurrentVertices() {
     }
 
     return transformedModel;
+}
+
+// repeat function animation that adds current animation speed to current transformation rotation with settimeout 50
+function animate() {
+    if (current.animation.enabled) {
+        current.transformation.rotation[0] += current.animation.speed[0]/100;
+        current.transformation.rotation[1] += current.animation.speed[1]/100;
+        current.transformation.rotation[2] += current.animation.speed[2]/100;
+
+        for (let i = 0; i < 3; i++) {
+            if (current.transformation.rotation[i] > 180) {
+                current.transformation.rotation[i] -= 360;
+            } else if (current.transformation.rotation[i] < -180) {
+                current.transformation.rotation[i] += 360;
+            }
+        }
+
+        document.querySelectorAll("#rotate-popup .slider").forEach((slider) => {
+            slider.value = current.transformation.rotation[
+                document.querySelector("#" + slider.id + "-value").innerHTML.substring(0,3) === "X: " ? 0
+                : document.querySelector("#" + slider.id + "-value").innerHTML.substring(0,3) === "Y: " ? 1
+                : 2
+            ];
+            document.querySelector("#" + slider.id + "-value").innerHTML = document.querySelector("#" + slider.id + "-value").innerHTML.substring(0,3) + slider.value + "°";
+        });
+
+        console.log(current.transformation.rotation);
+
+        setTimeout(animate, 10);
+    }
 }

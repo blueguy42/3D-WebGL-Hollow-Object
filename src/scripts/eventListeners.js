@@ -167,24 +167,51 @@ document.getElementById('translation-z').addEventListener('input', function() {
 
 // scaling
 document.getElementById('scaling').addEventListener('input', function() {
-    current.transformation.scale = this.value;
+    current.transformation.scale = +this.value;
     document.getElementById('scaling-value').innerHTML = `Scale: ${this.value}x`;
 });
 
 // rotation
 document.getElementById('rotate-x').addEventListener('input', function() {
-    current.transformation.rotation[0] = this.value;
+    current.transformation.rotation[0] = +this.value;
     document.getElementById('rotate-x-value').innerHTML = "X: " + this.value + "°";
 });
 
 document.getElementById('rotate-y').addEventListener('input', function() {
-    current.transformation.rotation[1] = this.value;
+    current.transformation.rotation[1] = +this.value;
     document.getElementById('rotate-y-value').innerHTML = "Y: " + this.value + "°";
 });
 
 document.getElementById('rotate-z').addEventListener('input', function() {
-    current.transformation.rotation[2] = this.value;
+    current.transformation.rotation[2] = +this.value;
     document.getElementById('rotate-z-value').innerHTML = "Z: " + this.value + "°";
+});
+
+// animation
+document.getElementById('speed-x').addEventListener('input', function() {
+    current.animation.speed[0] = +this.value;
+    document.getElementById('speed-x-value').innerHTML = `X Speed: ${this.value}°/s`;
+});
+
+document.getElementById('speed-y').addEventListener('input', function() {
+    current.animation.speed[1] = +this.value;
+    document.getElementById('speed-y-value').innerHTML = `Y Speed: ${this.value}°/s`;
+});
+
+document.getElementById('speed-z').addEventListener('input', function() {
+    current.animation.speed[2] = +this.value;
+    document.getElementById('speed-z-value').innerHTML = `Z Speed: ${this.value}°/s`;
+});
+
+document.getElementById('btn-animation-enable').addEventListener('click', function() {
+    if (current.animation.enabled) {
+        this.innerHTML = 'Enable';
+        current.animation.enabled = false;
+    } else {
+        this.innerHTML = 'Disable';
+        current.animation.enabled = true;
+        animate();
+    }
 });
 
 document.getElementById('btn-shader').addEventListener('click', function() {
