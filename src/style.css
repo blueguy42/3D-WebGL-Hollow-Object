@@ -339,7 +339,7 @@ input:checked + .toggle:before {
 .modal-help {
     position: fixed;
     top: calc(50vh - 400px);
-    left: calc(50vw - 325px);
+    left: calc(50vw - 350px);
     background-color: #474646;
     width: 700px;
     height: 800px;
