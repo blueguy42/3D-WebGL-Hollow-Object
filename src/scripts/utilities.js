@@ -1,3 +1,24 @@
+function loadModel(modelName) {
+    var fileName;
+    if (modelName === "cube") {
+        fileName = "../test/cube.json";
+    } else if (modelName === "triangularPrism") {
+        fileName = "../test/triangularPrism.json";
+    } else if (modelName === "pyramid") {
+        fileName = "../test/pyramid.json";
+    }
+    const request = new XMLHttpRequest();
+    request.open('GET', fileName, false);
+    request.send(null);
+
+    if (request.status === 200) {
+        const data = JSON.parse(request.responseText);
+        return data
+    } else {
+        console.error('Failed to load JSON file.');
+    }
+}
+
 function hexToRGBColor(hex) {
     var bigint = parseInt(hex.replace("#", ""), 16);
     var r = (bigint >> 16) & 255;
@@ -17,11 +38,11 @@ function syncToolsFromCurrent() {
     }
 
     // Sync Shape
-    if (current.model === cube) {
+    if (current.model.name === "cube") {
         document.getElementById("shape-cube").click();
-    } else if (current.model === triangularPrism) {
+    } else if (current.model.name === "triangularPrism") {
         document.getElementById("shape-triangular-prism").click();
-    } else if (current.model === pyramid) {
+    } else if (current.mode.name === "pyramid") {
         document.getElementById("shape-pyramid").click();
     } 
 

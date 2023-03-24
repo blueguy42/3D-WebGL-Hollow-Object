@@ -81,7 +81,7 @@ function initializeProgram() {
 
 function resetCanvas() {
     current = {
-        model: cube,
+        model: loadModel("cube"),
         transformation: {
             translation: [0, 0, 0],
             rotation   : [0, 0, 0],

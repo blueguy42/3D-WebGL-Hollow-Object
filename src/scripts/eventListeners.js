@@ -108,7 +108,7 @@ document.getElementById('shape-cube').addEventListener('click', function() {
         shape.classList.remove('active');
     });
     this.classList.add('active');
-    current.model = cube;
+    current.model = loadModel("cube");
 });
 
 document.getElementById('shape-triangular-prism').addEventListener('click', function() {
@@ -117,7 +117,7 @@ document.getElementById('shape-triangular-prism').addEventListener('click', func
         shape.classList.remove('active');
     });
     this.classList.add('active');
-    current.model = triangularPrism;
+    current.model = loadModel("triangularPrism");
 });
 
 document.getElementById('shape-pyramid').addEventListener('click', function() {
@@ -126,7 +126,7 @@ document.getElementById('shape-pyramid').addEventListener('click', function() {
         shape.classList.remove('active');
     });
     this.classList.add('active');
-    current.model = pyramid;
+    current.model = loadModel("pyramid");
 });
 
 window.addEventListener('resize', function() {
