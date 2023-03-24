@@ -113,7 +113,7 @@ const createCamTranslationMatrix = (radius) => {
         1, 0, 0, 0,
         0, 1, 0, 0,
         0, 0, 1, 0,
-        0, 0, 0, radius
+        0, 0, radius, 1
     ];
 }
 

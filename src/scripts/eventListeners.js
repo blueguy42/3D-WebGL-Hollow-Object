@@ -82,7 +82,7 @@ document.getElementById('btn-tool-zoom').addEventListener('click', function() {
 });
 
 document.getElementById('zoom-slider').addEventListener('input', function() {
-    current.view.radius = -(this.value-150)/100;
+    current.view.radius = -((this.value/100*2)-1);
     document.getElementById('zoom-value').innerHTML = this.value + '%';
 });
 

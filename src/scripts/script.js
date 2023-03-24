@@ -89,7 +89,7 @@ function resetCanvas() {
         },
         view: {
             rotation: [0, 0, 0],
-            radius: 1,
+            radius: 0,
         },
         shader: true,
         projection: "orthographic",
