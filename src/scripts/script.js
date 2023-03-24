@@ -130,8 +130,7 @@ function computeTransformMatrix() {
 function computeViewMatrix() {
     var viewMatrix;
 
-    viewMatrix = createTranslationMatrix(0, 0, current.view.radius);
-    viewMatrix = matrixMult4x4(createRotationMatrix(current.view.rotation[0], current.view.rotation[1], current.view.rotation[2]), viewMatrix);
+    viewMatrix = createRotationMatrix(current.view.rotation[0], current.view.rotation[1], current.view.rotation[2]);
 
     if (current.projection === "orthographic") {
         current.fov = 0;

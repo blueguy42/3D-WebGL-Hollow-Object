@@ -81,11 +81,6 @@ document.getElementById('btn-tool-zoom').addEventListener('click', function() {
     this.classList.toggle('active');
 });
 
-document.getElementById('zoom-slider').addEventListener('input', function() {
-    document.getElementById('zoom-value').innerHTML = this.value + '%';
-    current.view.radius = (this.value/100*2)-1
-});
-
 document.getElementById('btn-tool-projection').addEventListener('click', function() {
     document.querySelectorAll('.popup').forEach(function(popup) {
         if (popup.id !== 'projection-popup') {
@@ -259,7 +254,9 @@ document.getElementById('btn-load').addEventListener('click', function() {
         reader.onload = readerEvent => {
             resetCanvas();
             current.model = JSON.parse(readerEvent.target.result);
-            syncToolsFromCurrent();
+            document.querySelectorAll(".btn-shapes").forEach(function(btn) {
+                btn.classList.remove('active');
+            });
         }
     }
     input.click();
