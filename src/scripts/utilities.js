@@ -177,8 +177,6 @@ function animate() {
             document.querySelector("#" + slider.id + "-value").innerHTML = document.querySelector("#" + slider.id + "-value").innerHTML.substring(0,3) + slider.value + "°";
         });
 
-        console.log(current.transformation.rotation);
-
         setTimeout(animate, 10);
     }
 }
