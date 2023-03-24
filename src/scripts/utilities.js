@@ -52,8 +52,8 @@ function syncToolsFromCurrent() {
     });
 
     // Sync Radius
-    document.querySelector("#zoom-slider").value = (current.view.radius+1)*50;
-    document.querySelector("#zoom-value").innerHTML = `${(current.view.radius+1)*50} %`;
+    document.querySelector("#zoom-slider").value = current.view.radius*-100+150;
+    document.querySelector("#zoom-value").innerHTML = `${current.view.radius*-100+150} %`;
 
     // Sync Shader
     if ((current.shader && !document.querySelector("#btn-shader").hasAttribute("checked")) || (!current.shader && document.querySelector("#btn-shader").hasAttribute("checked"))) {

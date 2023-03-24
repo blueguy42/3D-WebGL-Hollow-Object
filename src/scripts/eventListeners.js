@@ -81,6 +81,11 @@ document.getElementById('btn-tool-zoom').addEventListener('click', function() {
     this.classList.toggle('active');
 });
 
+document.getElementById('zoom-slider').addEventListener('input', function() {
+    current.view.radius = -(this.value-150)/100;
+    document.getElementById('zoom-value').innerHTML = this.value + '%';
+});
+
 document.getElementById('btn-tool-projection').addEventListener('click', function() {
     document.querySelectorAll('.popup').forEach(function(popup) {
         if (popup.id !== 'projection-popup') {

@@ -93,7 +93,7 @@ function resetCanvas() {
         },
         view: {
             rotation: [0, 0, 0],
-            radius: 0,
+            radius: 1,
         },
         shader: true,
         projection: "orthographic",
@@ -127,6 +127,7 @@ function computeViewMatrix() {
     var viewMatrix;
 
     viewMatrix = createRotationMatrix(current.view.rotation[0], current.view.rotation[1], current.view.rotation[2]);
+    viewMatrix = matrixMult4x4(viewMatrix, createCamTranslationMatrix(current.view.radius));
 
     if (current.projection === "orthographic") {
         current.fov = 0;

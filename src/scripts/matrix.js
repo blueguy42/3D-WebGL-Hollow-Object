@@ -103,3 +103,12 @@ const obliqueMatrix = (theta = 100, phi = 100) => {
         0, 0, 0, 1
     ];
 };
+
+const createCamTranslationMatrix = (radius) => {
+    return [
+        1, 0, 0, 0,
+        0, 1, 0, 0,
+        0, 0, 1, 0,
+        0, 0, 0, radius
+    ];
+}
