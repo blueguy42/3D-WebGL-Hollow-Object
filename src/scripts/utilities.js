@@ -21,6 +21,8 @@ function syncToolsFromCurrent() {
         document.getElementById("shape-cube").click();
     } else if (current.model === triangularPrism) {
         document.getElementById("shape-triangular-prism").click();
+    } else if (current.model === pyramid) {
+        document.getElementById("shape-pyramid").click();
     } 
 
     // Sync Translation

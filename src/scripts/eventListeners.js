@@ -115,6 +115,15 @@ document.getElementById('shape-triangular-prism').addEventListener('click', func
     current.model = triangularPrism;
 });
 
+document.getElementById('shape-pyramid').addEventListener('click', function() {
+    if (this.classList.contains('active')) return;
+    document.querySelectorAll('.btn-shapes').forEach(function(shape) {
+        shape.classList.remove('active');
+    });
+    this.classList.add('active');
+    current.model = pyramid;
+});
+
 window.addEventListener('resize', function() {
     canvas.width = canvas.offsetWidth;
     canvas.height = canvas.offsetHeight;
