@@ -13,6 +13,19 @@ function matrixMult4x4(x, y) {
     return res;
 }
 
+function matrixMult4x1(x, y) {
+    var res = [];
+    var currElm = 0;
+    for (var i = 0; i < 4; i++) {
+        currElm = 0;
+        for (var j = 0; j < 4; j++) {
+            currElm += x[4 * i + j] * y[j];
+        }
+        res.push(currElm);
+    }
+    return res;
+}
+
 function degToRad(deg) {
     return deg * (Math.PI / 180);
 }

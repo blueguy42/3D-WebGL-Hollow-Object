@@ -228,7 +228,7 @@ document.getElementById('canvas').addEventListener("mousemove", function(e) {
 });
 
 document.getElementById('btn-save').addEventListener('click', function() {
-    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(current));
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(applyTransformationToCurrentVertices()));
     const downloadAnchorNode = document.createElement('a');
     downloadAnchorNode.setAttribute("href", dataStr);
     downloadAnchorNode.setAttribute("download", "save.json");
@@ -245,7 +245,8 @@ document.getElementById('btn-load').addEventListener('click', function() {
         const reader = new FileReader();
         reader.readAsText(file,'UTF-8');
         reader.onload = readerEvent => {
-            current = JSON.parse(readerEvent.target.result);
+            resetCanvas();
+            current.model = JSON.parse(readerEvent.target.result);
             syncToolsFromCurrent();
         }
     }

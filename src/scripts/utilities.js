@@ -19,7 +19,9 @@ function syncToolsFromCurrent() {
     // Sync Shape
     if (current.model === cube) {
         document.getElementById("shape-cube").click();
-    } // else if ...
+    } else if (current.model === triangularPrism) {
+        document.getElementById("shape-triangular-prism").click();
+    } 
 
     // Sync Translation
     document.querySelectorAll("#translation-popup .slider").forEach((slider) => {
@@ -47,6 +49,10 @@ function syncToolsFromCurrent() {
         document.querySelector("#scaling-value").innerHTML = `Scale: ${current.transformation.scale}x`;
     });
 
+    // Sync Radius
+    document.querySelector("#zoom-slider").value = (current.view.radius+1)*50;
+    document.querySelector("#zoom-value").innerHTML = `${(current.view.radius+1)*50} %`;
+
     // Sync Shader
     if ((current.shader && !document.querySelector("#btn-shader").hasAttribute("checked")) || (!current.shader && document.querySelector("#btn-shader").hasAttribute("checked"))) {
         current.shader = !current.shader;
@@ -65,4 +71,30 @@ function syncToolsFromCurrent() {
             document.querySelector("#" + slider.id + "-value").innerHTML = "Phi: " + slider.value + "°";
         }
     });
+}
+
+function applyTransformationToCurrentVertices() {
+    var transformMatrix = computeTransformMatrix();
+    var vertices = current.model.vertices;
+    var transformedModel = {
+        vertices: [],
+        indices: current.model.indices
+    };
+
+    for (var i = 0; i < vertices.length; i+=6) {
+        const x = vertices[i];
+        const y = vertices[i + 1];
+        const z = vertices[i + 2];
+
+        var transformed = matrixMult4x1(transformMatrix, [x, y, -z, 1]);
+
+        transformedModel.vertices.push(transformed[0] + transformMatrix[12]);
+        transformedModel.vertices.push(transformed[1] + transformMatrix[13]);
+        transformedModel.vertices.push(transformed[2] - transformMatrix[14]);
+        transformedModel.vertices.push(vertices[i+3]);
+        transformedModel.vertices.push(vertices[i+4]);
+        transformedModel.vertices.push(vertices[i+5]);
+    }
+
+    return transformedModel;
 }
