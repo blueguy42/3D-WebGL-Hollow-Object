@@ -22,12 +22,8 @@ const shaderVertex = `
     void main(void) {
         vec4 projectedPos = uProjectionMatrix * vec4(position, 1.0);
         
-        if (fov < 0.01)
-            gl_Position = projectedPos;
-        else {
-            float zDivider = 2.0 + projectedPos.z * fov;
-            gl_Position = vec4(projectedPos.xy / zDivider, projectedPos.zw);
-        }
+        gl_Position = projectedPos;
+
         vColor = vec4(pow(min(max((1.6 - projectedPos.z) / 2.0, 0.0), 1.0), 2.2) * color, 1.0);
         vFlatColor = vec4(color, 1.0);
     }
@@ -101,7 +97,11 @@ function resetCanvas() {
             theta: 105,
             phi: 105,
         },
-        fov: null,
+        perspective: {
+            near: 0.001,
+            far: 2,
+        },
+        fov: degToRad(60),
         mouse: {
             dragging: false,
             origin: {x: undefined, y: undefined},
@@ -130,11 +130,11 @@ function computeViewMatrix() {
     viewMatrix = matrixMult4x4(viewMatrix, createCamTranslationMatrix(current.view.radius));
 
     if (current.projection === "orthographic") {
-        current.fov = 0;
         return matrixMult4x4(identityMatrix, viewMatrix);
     } else if (current.projection === "oblique") {
-        current.fov = 0;
         return matrixMult4x4(obliqueMatrix(current.oblique.theta, current.oblique.phi), viewMatrix);
+    } else if (current.projection === "perspective") {
+        return matrixMult4x4(perspectiveMatrix(current.fov, current.perspective.near, current.perspective.far), viewMatrix);
     }
 }
 

@@ -89,7 +89,15 @@
                         <p id="oblique-phi-value">Phi: 105°</p>
                         <input type="range" class="slider" min="0" max="180" value="105" id="oblique-phi">
                     </div>
-                    <button class="btn-popup" style="border-radius: 0 0 10px 10px;" id="btn-projection-perspective">Perspective</button>
+                    <button class="btn-popup btn-projection" id="btn-projection-perspective">Perspective</button>
+                    <div class="popup-submenu" id="perspective-params">
+                        <p id="perspective-fov-value">FOV: 90°</p>
+                        <input type="range" class="slider" min="0" max="180" value="60" id="perspective-fov">
+                        <p id="perspective-near-value">Near: 1</p>
+                        <input type="range" class="slider" min="1" max="2000" value="1" id="perspective-near">
+                        <p id="perspective-far-value">Far: 2000</p>
+                        <input type="range" class="slider" min="1" max="2000" value="2000" id="perspective-far">
+                    </div>
                 </div>
             </div>
             <button class="btn-tools" id="btn-tool-projection"><i class="fas fa-camera"></i></button>

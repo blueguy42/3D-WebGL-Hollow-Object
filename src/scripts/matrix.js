@@ -30,6 +30,10 @@ function degToRad(deg) {
     return deg * (Math.PI / 180);
 }
 
+function radToDeg(rad) {
+    return rad * (180 / Math.PI);
+}
+
 const createTranslationMatrix = (x, y, z) => {
     return [
         1, 0, 0, 0,
@@ -110,5 +114,17 @@ const createCamTranslationMatrix = (radius) => {
         0, 1, 0, 0,
         0, 0, 1, 0,
         0, 0, 0, radius
+    ];
+}
+
+const perspectiveMatrix = (fov, near, far) => {
+    const aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
+    const f = 1.0 / Math.tan(0.5 * fov)
+    const rangeInv = 1.0 / (far - near);
+    return [
+        f / aspect, 0, 0, 0,
+        0, f, 0, 0,
+        0, 0, (near + far) * rangeInv * (-1), -1,
+        0, 0, ((-2 * near * far) + (near + far)) * rangeInv, 1
     ];
 }

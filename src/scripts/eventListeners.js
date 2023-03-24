@@ -196,6 +196,7 @@ document.getElementById('btn-projection-orthographic').addEventListener('click',
     });
     this.classList.add('active');
     document.querySelector('#oblique-params').classList.remove('show');
+    document.querySelector('#perspective-params').classList.remove('show');
     current.projection = "orthographic";
 });
 
@@ -205,6 +206,7 @@ document.getElementById('btn-projection-oblique').addEventListener('click', func
         btn.classList.remove('active');
     });
     document.querySelector('#oblique-params').classList.add('show');
+    document.querySelector('#perspective-params').classList.remove('show');
     this.classList.add('active');
     current.projection = "oblique";
 });
@@ -217,6 +219,34 @@ document.getElementById('oblique-theta').addEventListener('input', function() {
 document.getElementById('oblique-phi').addEventListener('input', function() {
     current.oblique.phi = this.value;
     document.getElementById('oblique-phi-value').innerHTML = "Phi: " + this.value + "°";
+});
+
+document.getElementById('btn-projection-perspective').addEventListener('click', function() {
+    if (this.classList.contains('active')) return;
+    document.querySelectorAll('.btn-projection').forEach(function(btn) {
+        btn.classList.remove('active');
+    });
+    document.querySelector('#oblique-params').classList.remove('show');
+    document.querySelector('#perspective-params').classList.add('show');
+    this.classList.add('active');
+    current.projection = "perspective";
+    current.fov = degToRad(90);
+    document.getElementById('perspective-fov-value').innerHTML = "FOV: " + radToDeg(current.fov).toFixed(0) + "°";
+});
+
+document.getElementById('perspective-fov').addEventListener('input', function() {
+    current.fov = degToRad(this.value);
+    document.getElementById('perspective-fov-value').innerHTML = "FOV: " + this.value + "°";
+});
+
+document.getElementById('perspective-near').addEventListener('input', function() {
+    current.perspective.near = this.value/1000;
+    document.getElementById('perspective-near-value').innerHTML = "Near: " + this.value;
+});
+
+document.getElementById('perspective-far').addEventListener('input', function() {
+    current.perspective.far = this.value/1000;
+    document.getElementById('perspective-far-value').innerHTML = "Far: " + this.value;
 });
 
 document.getElementById('canvas').addEventListener("mousedown", function(e) {

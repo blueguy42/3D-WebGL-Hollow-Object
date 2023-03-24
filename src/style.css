@@ -332,3 +332,16 @@ input:checked + .toggle:before {
     padding-bottom: 10px;
     overflow: auto;
 }
+
+#perspective-params {
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    transition: all 0.2s linear;
+}
+
+#perspective-params.show {
+    height: 100px;
+    padding-bottom: 10px;
+    overflow: auto;
+}
