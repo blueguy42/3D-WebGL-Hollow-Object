@@ -119,12 +119,13 @@ const createCamTranslationMatrix = (radius) => {
 
 const perspectiveMatrix = (fov, near, far) => {
     const aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
-    const f = 1.0 / Math.tan(0.5 * fov)
-    const rangeInv = 1.0 / (far - near);
+    const f = 1.0 / Math.tan(0.5 * fov);
+    const rangeInv = 1.0 / (near - far);
+ 
     return [
-        f / aspect, 0, 0, 0,
-        0, f, 0, 0,
-        0, 0, (near + far) * rangeInv * (-1), -1,
-        0, 0, ((-2 * near * far) + (near + far)) * rangeInv, 1
+      f / aspect, 0, 0, 0,
+      0, f, 0, 0,
+      0, 0, (far + near) * rangeInv * (-1), 1,
+      0, 0, ((-2 * far * near) + (far + near)) * rangeInv * (-1), 1
     ];
 }

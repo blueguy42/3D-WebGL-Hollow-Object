@@ -6,13 +6,11 @@ const program = gl.createProgram();
 var positionAttributeLocation = null
 var colorAttributeLocation = null
 var uProjectionMatrixUniformLocation = null
-var fovUniformLocation = null
 var current = {}
 
 const shaderVertex = `
     attribute vec3 position;
     attribute vec3 color;
-    uniform float fov;
 
     uniform mat4 uProjectionMatrix;
 
@@ -24,7 +22,7 @@ const shaderVertex = `
         
         gl_Position = projectedPos;
 
-        vColor = vec4(pow(min(max((1.6 - projectedPos.z) / 2.0, 0.0), 1.0), 2.2) * color, 1.0);
+        vColor = vec4(pow(min(max((1.6 - position.z) / 2.0, 0.0), 1.0), 2.2) * color, 1.0);
         vFlatColor = vec4(color, 1.0);
     }
 `
@@ -46,7 +44,7 @@ const flatShaderFragment = `
 `
 
 function main() {
-    resetCanvas();
+    resetCanvas(null);
     if (gl === null) {
         alert("Unable to initialize WebGL. Your browser or machine may not support it.");
         return;
@@ -74,14 +72,13 @@ function initializeProgram() {
     positionAttributeLocation = gl.getAttribLocation(program, "position");
     colorAttributeLocation = gl.getAttribLocation(program, "color");
     uProjectionMatrixUniformLocation = gl.getUniformLocation(program, "uProjectionMatrix");
-    fovUniformLocation  = gl.getUniformLocation(program, "fov");
 
     requestAnimationFrame(render);
 }
 
-function resetCanvas() {
+function resetCanvas(currentModel) {
     current = {
-        model: loadModel("cube"),
+        model: currentModel ? currentModel : loadModel("cube"),
         transformation: {
             translation: [0, 0, 0],
             rotation   : [0, 0, 0],
@@ -92,16 +89,16 @@ function resetCanvas() {
             radius: 0,
         },
         shader: true,
-        projection: "orthographic",
+        projection: "perspective",
         oblique: {
             theta: 105,
             phi: 105,
         },
         perspective: {
-            near: 0.001,
+            fov: degToRad(90),
+            near: 0.1,
             far: 2,
         },
-        fov: degToRad(60),
         mouse: {
             dragging: false,
             origin: {x: undefined, y: undefined},
@@ -134,7 +131,7 @@ function computeViewMatrix() {
     } else if (current.projection === "oblique") {
         return matrixMult4x4(obliqueMatrix(current.oblique.theta, current.oblique.phi), viewMatrix);
     } else if (current.projection === "perspective") {
-        return matrixMult4x4(perspectiveMatrix(current.fov, current.perspective.near, current.perspective.far), viewMatrix);
+        return matrixMult4x4(perspectiveMatrix(current.perspective.fov, current.perspective.near, current.perspective.far), viewMatrix);
     }
 }
 
@@ -158,7 +155,6 @@ function render() {
     gl.vertexAttribPointer(colorAttributeLocation, 3, gl.FLOAT, false, 6*Float32Array.BYTES_PER_ELEMENT, 3*Float32Array.BYTES_PER_ELEMENT);
 
     gl.uniformMatrix4fv(uProjectionMatrixUniformLocation, false, new Float32Array(computeViewMatrix()));
-    gl.uniform1f(fovUniformLocation, current.fov);
 
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
     gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(current.model.indices), gl.STATIC_DRAW);

@@ -201,7 +201,7 @@ document.getElementById('btn-reset').addEventListener('click', function() {
     if (!current.shader) {
         document.getElementById('btn-shader').click();
     }
-    resetCanvas();
+    resetCanvas(current.model);
 });
 
 document.getElementById('btn-tool-help').addEventListener('click', function() {
@@ -260,22 +260,21 @@ document.getElementById('btn-projection-perspective').addEventListener('click', 
     document.querySelector('#perspective-params').classList.add('show');
     this.classList.add('active');
     current.projection = "perspective";
-    current.fov = degToRad(90);
-    document.getElementById('perspective-fov-value').innerHTML = "FOV: " + radToDeg(current.fov).toFixed(0) + "°";
+    document.getElementById('perspective-fov-value').innerHTML = "FOV: " + radToDeg(current.perspective.fov).toFixed(0) + "°";
 });
 
 document.getElementById('perspective-fov').addEventListener('input', function() {
-    current.fov = degToRad(this.value);
+    current.perspective.fov = degToRad(this.value);
     document.getElementById('perspective-fov-value').innerHTML = "FOV: " + this.value + "°";
 });
 
 document.getElementById('perspective-near').addEventListener('input', function() {
-    current.perspective.near = this.value/1000;
+    current.perspective.near = +this.value;
     document.getElementById('perspective-near-value').innerHTML = "Near: " + this.value;
 });
 
 document.getElementById('perspective-far').addEventListener('input', function() {
-    current.perspective.far = this.value/1000;
+    current.perspective.far = +this.value;
     document.getElementById('perspective-far-value').innerHTML = "Far: " + this.value;
 });
 
@@ -326,8 +325,7 @@ document.getElementById('btn-load').addEventListener('click', function() {
         const reader = new FileReader();
         reader.readAsText(file,'UTF-8');
         reader.onload = readerEvent => {
-            resetCanvas();
-            current.model = JSON.parse(readerEvent.target.result);
+            resetCanvas(JSON.parse(readerEvent.target.result));
             document.querySelectorAll(".btn-shapes").forEach(function(btn) {
                 btn.classList.remove('active');
             });

@@ -98,13 +98,13 @@ function syncToolsFromCurrent() {
     // Sync Perspective Parameters
     document.querySelectorAll("#perspective-params .slider").forEach((slider) => {
         if (slider.id === "perspective-fov") {
-            slider.value = radToDeg(current.fov).toFixed(0);
+            slider.value = radToDeg(current.perspective.fov).toFixed(0);
             document.querySelector("#" + slider.id + "-value").innerHTML = "FOV: " + slider.value + "°";
         } else if (slider.id === "perspective-far") {
-            slider.value = current.perspective.far*1000;
+            slider.value = current.perspective.far;
             document.querySelector("#" + slider.id + "-value").innerHTML = "Far: " + slider.value;
         } else if (slider.id === "perspective-near") {
-            slider.value = current.perspective.near*1000;
+            slider.value = current.perspective.near;
             document.querySelector("#" + slider.id + "-value").innerHTML = "Near: " + slider.value;
         }
     });
