@@ -1,15 +1,15 @@
-# IF3260 Grafika Komputer Tugas 2
-## Deskripsi
-Sebuah web based app yang menampilkan hollow object 3D dengan menggunakan WebGL murni tanpa library atau framework apa pun. Website ini terdiri dari beberapa tombol-tombol kakas untuk menjalankan fitur-fitur seperti transformasi objek (translasi, rotasi, scaling), perubahan jenis projection, radius kamera, reset, mode shading, menyimpan model hasil transformasi & load file hasil simpanan, dan menu help. Juga terdapat fitur rotasi kamera dengan melakukan drag mouse di dalam canvas.
+# Tugas 2 IF3260 Grafika Komputer
+## Description
+A web-based application that displays hollow 3D objects using pure WebGL without any libraries or frameworks. The website consists of several tool buttons to execute features such as object transformation (translation, rotation, scaling), changing projection types (orthographic, oblique, or perspective), camera radius, reset view, shader mode, saving and loading transformed models, animation, and a help menu. You can also rotate the camera by dragging your mouse inside the canvas.
 
 ## Prerequisites
-* Web browser yang mendukung WebGL, HTML5, dan javascript
-* Python untuk menjalankan webserver
+* A web browser that supports WebGL, HTML5, and JavaScript
+* Python to run a web server
 
-## How to run
-1. Clone repository ini
-2. Buka Terminal di repository ini dan jalankan command `python -m http.server`
-3. Buka `localhost:8000/src` di browser anda
+## How to Run
+1. Clone this repository
+2. Open a terminal in the root of the repository and run the command `python -m http.server`
+3. Open `localhost:8000/src` in your browser
 
 ## Authors
 K01 - G20
