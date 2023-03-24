@@ -319,3 +319,16 @@ input:checked + .toggle:before {
     font-weight: 600;
     margin: 5px;
 }
+
+#oblique-params {
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    transition: all 0.2s linear;
+}
+
+#oblique-params.show {
+    height: 100px;
+    padding-bottom: 10px;
+    overflow: auto;
+}

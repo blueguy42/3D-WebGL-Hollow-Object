@@ -89,21 +89,21 @@ function initializeProgram() {
 
 function resetCanvas() {
     current = {
-        model: triangularPrism,
+        model: cube,
         transformation: {
             translation: [0, 0, 0],
             rotation   : [0, 0, 0],
             scale      : 1.00,
         },
         view: {
-            rotation: [-0.4, 0.787, 0],
+            rotation: [0, 0, 0],
             radius: 0,
         },
         shader: true,
         projection: "orthographic",
         oblique: {
-            theta: 100,
-            phi: 100,
+            theta: 105,
+            phi: 105,
         },
         fov: null,
         mouse: {
@@ -130,8 +130,8 @@ function computeTransformMatrix() {
 function computeViewMatrix() {
     var viewMatrix;
 
-    viewMatrix = createRotationMatrix(current.view.rotation[0], current.view.rotation[1], current.view.rotation[2]);
-    viewMatrix = matrixMult4x4(viewMatrix, createTranslationMatrix(0, 0, current.view.radius));
+    viewMatrix = createTranslationMatrix(0, 0, current.view.radius);
+    viewMatrix = matrixMult4x4(createRotationMatrix(current.view.rotation[0], current.view.rotation[1], current.view.rotation[2]), viewMatrix);
 
     if (current.projection === "orthographic") {
         current.fov = 0;

@@ -83,6 +83,7 @@ document.getElementById('btn-tool-zoom').addEventListener('click', function() {
 
 document.getElementById('zoom-slider').addEventListener('input', function() {
     document.getElementById('zoom-value').innerHTML = this.value + '%';
+    current.view.radius = (this.value/100*2)-1
 });
 
 document.getElementById('btn-tool-projection').addEventListener('click', function() {
@@ -108,6 +109,15 @@ document.getElementById('shape-cube').addEventListener('click', function() {
     });
     this.classList.add('active');
     current.model = cube;
+});
+
+document.getElementById('shape-triangular-prism').addEventListener('click', function() {
+    if (this.classList.contains('active')) return;
+    document.querySelectorAll('.btn-shapes').forEach(function(shape) {
+        shape.classList.remove('active');
+    });
+    this.classList.add('active');
+    current.model = triangularPrism;
 });
 
 window.addEventListener('resize', function() {
@@ -176,6 +186,7 @@ document.getElementById('btn-projection-orthographic').addEventListener('click',
         btn.classList.remove('active');
     });
     this.classList.add('active');
+    document.querySelector('#oblique-params').classList.remove('show');
     current.projection = "orthographic";
 });
 
@@ -184,6 +195,7 @@ document.getElementById('btn-projection-oblique').addEventListener('click', func
     document.querySelectorAll('.btn-projection').forEach(function(btn) {
         btn.classList.remove('active');
     });
+    document.querySelector('#oblique-params').classList.add('show');
     this.classList.add('active');
     current.projection = "oblique";
 });
@@ -218,8 +230,8 @@ document.getElementById('canvas').addEventListener("mousemove", function(e) {
     if (!current.mouse.dragging) {
         return false;
     }
-    current.mouse.delta.x = (e.pageX - current.mouse.origin.x) * (Math.PI / canvas.width);
-    current.mouse.delta.y = (e.pageY - current.mouse.origin.y) * (Math.PI / canvas.height);
+    current.mouse.delta.x = (e.pageX - current.mouse.origin.x) * (Math.PI * 180 / canvas.width);
+    current.mouse.delta.y = (e.pageY - current.mouse.origin.y) * (Math.PI * 180 / canvas.height);
     current.view.rotation[1] -= current.mouse.delta.x;
     current.view.rotation[0] -= current.mouse.delta.y;
     current.mouse.origin.x = e.pageX;
