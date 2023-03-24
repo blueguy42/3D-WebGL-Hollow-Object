@@ -204,6 +204,21 @@ document.getElementById('btn-reset').addEventListener('click', function() {
     resetCanvas();
 });
 
+document.getElementById('btn-tool-help').addEventListener('click', function() {
+    document.querySelector('.modal-background').classList.add('show');
+    document.querySelector('.modal-help').classList.add('show');
+});
+
+document.querySelector('.modal-background').addEventListener('click', function() {
+    document.querySelector('.modal-background').classList.remove('show');
+    document.querySelector('.modal-help').classList.remove('show');
+});
+
+document.getElementById('btn-modal-help-close').addEventListener('click', function() {
+    document.querySelector('.modal-background').classList.remove('show');
+    document.querySelector('.modal-help').classList.remove('show');
+});
+
 document.getElementById('btn-projection-orthographic').addEventListener('click', function() {
     if (this.classList.contains('active')) return;
     document.querySelectorAll('.btn-projection').forEach(function(btn) {

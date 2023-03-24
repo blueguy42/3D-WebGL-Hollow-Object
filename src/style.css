@@ -320,6 +320,80 @@ input:checked + .toggle:before {
     margin: 5px;
 }
 
+.modal-background {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: #000000;
+    opacity: 0.5;
+    z-index: 5;
+    align-items: center;
+    justify-content: center;
+    display: none;
+}
+
+.modal-background.show {
+    display: flex;
+}
+
+.modal-help {
+    position: fixed;
+    top: calc(50vh - 400px);
+    left: calc(50vw - 325px);
+    background-color: #474646;
+    width: 700px;
+    height: 800px;
+    z-index: 6;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    box-shadow: #3c3c3c 0px 0px 7px;
+    display: none;
+}
+
+.modal-help.show {
+    display: block;
+}
+
+.modal-help-title {
+    font-size: 20px;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #5b5a5a;
+    padding: 0 20px;
+}
+
+#btn-modal-help-close {
+    font-size: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: #fff;
+    transition: 0.2s;
+}
+
+#btn-modal-help-close:hover {
+    color: #d1d1d1;
+    transform: scale(1.2);
+    background-color: #5a5a5a;
+    border-radius: 50px;
+}
+
+#btn-modal-help-close:active {
+    color: #282828;
+}
+
+.modal-help-body {
+    padding: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    overflow: auto;
+    height: 700px;
+}
+
 #oblique-params {
     height: 0;
     padding: 0;
