@@ -153,7 +153,6 @@ function applyTransformationToCurrentVertices() {
     return transformedModel;
 }
 
-// repeat function animation that adds current animation speed to current transformation rotation with settimeout 50
 function animate() {
     if (current.animation.enabled) {
         current.transformation.rotation[0] += current.animation.speed[0]/100;
