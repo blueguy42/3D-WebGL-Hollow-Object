@@ -389,9 +389,16 @@ input:checked + .toggle:before {
 .modal-help-body {
     padding: 20px;
     font-size: 14px;
-    font-weight: 600;
     overflow: auto;
     height: 700px;
+}
+
+.modal-help-body h2 {
+    margin: 10px 0 3px 0;
+}
+
+.modal-help-body p, .modal-help-body ul {
+    margin: 0;
 }
 
 #oblique-params {
