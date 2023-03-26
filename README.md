@@ -1,4 +1,4 @@
-# Tugas 2 IF3260 Grafika Komputer
+# IF3260 Computer Graphics: Major Assignment 2
 ## Description
 A web-based application that displays hollow 3D objects using pure WebGL without any libraries or frameworks. The website consists of several tool buttons to execute features such as object transformation (translation, rotation, scaling), changing projection types (orthographic, oblique, or perspective), camera radius, reset view, shader mode, saving and loading transformed models, animation, and a help menu. You can also rotate the camera by dragging your mouse inside the canvas.
 
